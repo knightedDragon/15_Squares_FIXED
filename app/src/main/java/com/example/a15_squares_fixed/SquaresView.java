@@ -280,6 +280,9 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
                     fabIndex = squareList.indexOf(s);
                     fabX = fab.getX();
                     fabY = fab.getY();
+                    fabCol = fab.getLoc()[0];
+                    fabRow = fab.getLoc()[1];
+
                     if (checkIfInside(s, x, y)) {
                         if (!findNull(s)) { //There isn't a cardinal null square
                             fab.isClicked = false;
