@@ -260,6 +260,10 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
 
     }
 
+    /**
+     * If a square has a valid place to move, it is able to be dragged to said space.
+     * In the case of no valid places for the square being touched to move, it will not move at all
+     * */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
@@ -349,6 +353,11 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
         return false;
     }
 
+
+    /**
+     * Checks the given square to see if the null square is in an adjacent cardinal space
+     * on the board
+     * */
     public boolean findNull(Square s) {
         if (!s.isClicked) {
             //If this one wasn't clicked why are you checking it dummy
