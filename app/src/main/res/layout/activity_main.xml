@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/secondary"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/welcome"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/text"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="50dp"
+            android:text="New Game"
+            android:background="@color/main"
+            app:rippleColor="@color/phoenix" />
+
+        <Switch
+            android:id="@+id/colorSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:minHeight="50dp"
+            android:text="Color!"
+            android:textColor="@color/text"
+            android:textSize="20dp"
+            android:thumbTint="@color/main"
+            android:trackTint="@color/secondary" />
+
+        <Button
+            android:id="@+id/quitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="50dp"
+            android:onClick="goodbye"
+            android:background="@color/main"
+            android:text="Quit"
+            app:rippleColor="@color/phoenix" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:id="@+id/boardText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Board Size: Don't you dare change me!"
+            android:textSize="20dp"
+            android:textColor="@color/text"
+            android:layout_weight="2"/>
+
+        <SeekBar
+            android:id="@+id/boardSizeBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="7"
+            android:min="2"
+            android:progress="4"
+            android:progressTint="@color/secondary"
+            android:thumbTint="@color/main" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#7F85E2"
+        android:orientation="vertical">
+
+        <com.example.a15_squares_fixed.SquaresView
+            android:id="@+id/squaresview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/adSpaceButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:backgroundTint="#7F85E2"
+            android:src="@drawable/adspace" />
+    </LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
