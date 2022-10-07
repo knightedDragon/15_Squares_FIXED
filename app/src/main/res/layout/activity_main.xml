@@ -108,13 +108,13 @@
             android:id="@+id/squaresview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3" />
+            android:layout_weight="1" />
 
         <ImageButton
             android:id="@+id/adSpaceButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="13"
+            android:layout_weight="4"
             android:backgroundTint="@color/adspace"
             android:src="@drawable/adspace" />
     </LinearLayout>
