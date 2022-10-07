@@ -24,7 +24,7 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
 
     private SquaresModel mod;
     private ArrayList<Square> squareList;
-    private Paint bgPaint, imgPaint;
+    private Paint bgPaint, imgPaint, yay;
     private Rect bg;
     private boolean firstDraw = true, colors = false, objection = false, gameWon = false;
     private Bitmap obj;
@@ -54,6 +54,9 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
         idColor = Color.WHITE;
         winColor = 0xFF000524;
 
+        yay = new Paint();
+        yay.setColor(idColor);
+
         obj = BitmapFactory.decodeResource(getResources(), R.drawable.object);
         oldProg = newProg = 4;
     }
@@ -70,6 +73,7 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
                 if (((x * bLength) + y) == (bLength * bLength - 1)) {
                     mod.nullX = (x * mod.length);
                     mod.nullY = (y * mod.length);
+                    mod.nullCol = mod.nullRow = mod.bLength - 1;
                     mod.nullIndex = bLength * bLength - 1;
 
                     squareList.add(null); //last tile is null
@@ -148,6 +152,7 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
                 winBG = 0xFF000524; //dark blue
             }
             bgPaint.setColor(winBG);
+            c.drawText("You Win!", mod.nullX + mod.length, mod.nullY + mod.length / 2, yay);
         } else {
             bgPaint.setColor(Color.GRAY);
         }
@@ -209,12 +214,11 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
                 }
             }
         }
-        /*
-        if(!isRandomizationValid(sList))
-        {
-            randomizeList();
+        checkWin();
+        if (gameWon) {
+            gameWon = false;
+            shuffleSquares(sList);
         }
-        */
     }
 
     /**

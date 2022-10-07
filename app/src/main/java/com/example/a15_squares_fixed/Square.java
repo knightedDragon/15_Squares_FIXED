@@ -125,4 +125,8 @@ public class Square {
     public int getId() {
         return id;
     }
+
+    public int getLength() {
+        return length;
+    }
 }
