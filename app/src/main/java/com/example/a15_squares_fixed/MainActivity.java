@@ -36,12 +36,15 @@ public class MainActivity extends AppCompatActivity {
         SeekBar size = findViewById(R.id.boardSizeBar);
         ImageButton ad = (ImageButton)findViewById(R.id.adSpaceButton);
         TextView sizeText = findViewById(R.id.boardText);
+        TextView gameText = findViewById(R.id.text);
 
         switchy.setOnCheckedChangeListener(view);
         newGame.setOnClickListener(view);
         size.setOnSeekBarChangeListener(view);
         ad.setOnClickListener(view);
         view.setBoardText(sizeText);
+        view.setGameText(gameText);
+        view.setResetText(newGame);
         view.setOnTouchListener(view);
     }
 

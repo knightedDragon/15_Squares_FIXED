@@ -36,7 +36,7 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
     private Rect bg;
     private boolean firstDraw = true, colors = false, objection = false, gameWon = false;
     private final Bitmap obj;
-    private TextView boardText;
+    private TextView boardText, gameText, resetText;
     private int oldProg, newProg;
     private static final int[][] neighborCoords = {{ -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
     private Square fab;
@@ -193,8 +193,25 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
         }
     }
 
+    /**
+     * Changes the TextView of the board size
+     * */
     public void setBoardText(TextView text) {
         boardText = text;
+    }
+
+    /**
+     * Changes the TextView of heading
+     * */
+    public void setGameText(TextView text) {
+        gameText = text;
+    }
+
+    /**
+     * Changes the TextView of heading
+     * */
+    public void setResetText(TextView text) {
+        resetText = text;
     }
 
     /**
@@ -340,7 +357,6 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
                     if (checkIfInside(s, x, y)) {
                         if (!findNull(s)) { //There isn't a cardinal null square
                             fab.isClicked = false;
-                            Log.e("String", "Whoops nothing here!");
                             return false; //Let's pretend you didn't touch it
                         }
                         return true;
@@ -453,9 +469,13 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
 
             if (!checkPlace(s)) {
                 gameWon = false;
+                gameText.setText("Let's play 15 Squares!");
+                resetText.setText("New Game");
                 return;
             }
         }
+        gameText.setText("Congrats! You won!");
+        resetText.setText("Play Again?");
         gameWon = true;
     }
 
