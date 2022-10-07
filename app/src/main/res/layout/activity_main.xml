@@ -101,7 +101,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#7F85E2"
+        android:background="@color/adspace"
         android:orientation="vertical">
 
         <com.example.a15_squares_fixed.SquaresView
@@ -115,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="4"
-            android:backgroundTint="#7F85E2"
+            android:backgroundTint="@color/adspace"
             android:src="@drawable/adspace" />
     </LinearLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -122,5 +122,7 @@ public class Square {
         this.boardPlace[1] = row;
     }
 
-
+    public int getId() {
+        return id;
+    }
 }

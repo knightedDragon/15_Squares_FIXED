@@ -26,13 +26,14 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
     private ArrayList<Square> squareList;
     private Paint bgPaint, imgPaint;
     private Rect bg;
-    private boolean firstDraw = true, colors = false, objection = false;
+    private boolean firstDraw = true, colors = false, objection = false, gameWon = false;
     private Bitmap obj;
     private TextView boardText;
     private int oldProg, newProg;
     private static final int[][] neighborCoords = {{ -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
     private Square fab;
     private int fabIndex, fabX, fabY, fabCol, fabRow;
+    private int squareColor, idColor, winColor, winBG;
 
     public SquaresView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -48,6 +49,10 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
 
         imgPaint = new Paint();
         imgPaint.setColor(Color.BLACK);
+
+        squareColor = Color.BLACK;
+        idColor = Color.WHITE;
+        winColor = 0xFF000524;
 
         obj = BitmapFactory.decodeResource(getResources(), R.drawable.object);
         oldProg = newProg = 4;
@@ -83,7 +88,7 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
             makeColors();
         }
         shuffleSquares(squareList);
-        firstDraw = false;
+        firstDraw = gameWon = false;
     }
 
     /**
@@ -94,21 +99,24 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
         for (Square s : squareList) {
             if (s != null) {
                 if (!colors) { //If it's not colors do that
-                    s.setColor(Color.BLACK, Color.WHITE);
+                    squareColor = Color.BLACK;
+                    idColor = Color.WHITE;
 
                 } else { //Otherwise it's colorful!!!
+                    idColor = Color.BLACK;
                     switch (mod.bLength % 3) {
                         case (2):
-                            s.setColor(0xFFD571A0, Color.BLACK);
+                            squareColor = 0xFFD571A0;
                             break; //Make it pink!
                         case (0):
-                            s.setColor(0xFF00BFAC, Color.BLACK);
+                            squareColor = 0xFF00BFAC;
                             break; //Make it teal!
                         case (1):
-                            s.setColor(0xFF7E57C2, Color.BLACK);
+                            squareColor = 0xFF7E57C2;
                             break; //Make it purple!
                     }
                 }
+                s.setColor(squareColor, idColor);
             }
         }
 
@@ -130,6 +138,20 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
             initBoard();
         }
 
+        checkWin();
+
+        if (gameWon) {
+            if (colors) {
+                winBG = 0xFF7F85E2; //light blue
+            }
+            if (!colors) {
+                winBG = 0xFF000524; //dark blue
+            }
+            bgPaint.setColor(winBG);
+        } else {
+            bgPaint.setColor(Color.GRAY);
+        }
+
         bg = new Rect(0, 0, getWidth(), getHeight());
         c.drawRect(bg, bgPaint);
 
@@ -140,6 +162,16 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
         for (int i = 0; i < (mod.bLength * mod.bLength); i++) {
             Square s = squareList.get(i);
             if (s != null) {
+                if (!checkPlace(s)) {
+                    s.setColor(squareColor, idColor);
+                } else if (checkPlace(s)) {
+                    if (!colors) {
+                        winColor = 0xFF186C1C; //darker green
+                    } else if (colors) {
+                        winColor = 0xFF7ADD73; //pastel green
+                    }
+                    s.setColor(winColor, idColor);
+                }
                 s.draw(c);
             }
         }
@@ -185,6 +217,9 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
         */
     }
 
+    /**
+     * Checks if the given coordinates are within the bounds of the given square
+     * */
     public boolean checkIfInside(Square s, float x, float y) {
         if (s.getX() <= x && s.getxEnd() >= x) {
             return s.getY() <= y && s.getyEnd() >= y; //Return whether it's in those bounds
@@ -266,6 +301,10 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
      * */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        if (objection || gameWon) {
+            return false;
+        } //If the game is won, don't move pieces
+
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
             //Get touch location
             float x = event.getX();
@@ -377,4 +416,31 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
         }
         return false; //there was no null neighbor
     }
+
+    public boolean checkPlace(Square s) {
+        if (s != null) {
+            int winRow = (s.getId() - 1) / mod.bLength;
+            int winCol = (s.getId() - 1) % mod.bLength;
+            if (s.getLoc()[0] == winCol && s.getLoc()[1] == winRow) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void checkWin() {
+        for (Square s : squareList) {
+            if (s == null) {
+                continue;
+            }
+
+            if (!checkPlace(s)) {
+                gameWon = false;
+                return;
+            }
+        }
+        gameWon = true;
+    }
+
 }
+

@@ -11,12 +11,14 @@
 
 
     <color name="text">#FF000000</color>
+    <color name="winGreen">#7ADD73</color>
     <color name="light_pink">#D571A0</color>
     <color name="teal">#00BFAC</color>
     <color name="purble">#6B4AA5</color>
     <color name="grey">#FF3C3C3C</color>
     <color name="miles">#500019</color>
     <color name="phoenix">#FF000524</color>
+    <color name="adspace">#FF7F85E2</color>
     <color name="winner">#FF186C1C</color>
 
 </resources>
