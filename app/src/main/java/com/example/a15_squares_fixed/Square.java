@@ -4,6 +4,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+/**
+ * An object class for 15 Squares
+ *
+ * @author Kathryn Weidman
+ * @version 10/6/22
+ *
+ * */
+
 public class Square {
 
     private int x, y, xEnd, yEnd;
@@ -15,6 +23,10 @@ public class Square {
     private Paint borderPaint;
     private int[] boardPlace; //Place in board
 
+
+    /**
+     * Constructor for a square
+     * */
     public Square() {
         x = y = xEnd = yEnd = -1;
         length = 200;
@@ -37,7 +49,10 @@ public class Square {
 
     }
 
-    public Square(Square s) { //COPY CSTR
+    /**
+     * Copy constructor for a given square
+     * */
+    public Square(Square s) {
         this.x = this.y = this.xEnd = this.yEnd = -1;
         this.id = s.id;
         this.isClicked = s.isClicked;
@@ -61,6 +76,9 @@ public class Square {
 
     }
 
+    /**
+     * Setter method for the main color and the text color of a square
+     * */
     public void setColor(int mainColor, int numColor) {
         this.squPaint.setColor(mainColor);
         this.idPaint.setColor(numColor);
@@ -73,6 +91,9 @@ public class Square {
     *
     * Resolution: Had Nate's help
     * */
+    /**
+     * Draws a square based on the x and y of the square this is called on
+     * */
     public void draw(Canvas c) {
         idPaint.setTextSize(length / 2);
         c.drawRect(x, y, x + length, y + length, squPaint);
@@ -80,6 +101,11 @@ public class Square {
         c.drawText(String.valueOf(id), x + length / 2, y + length / 2 -
                 (idPaint.descent() + idPaint.ascent()) / 2, idPaint);
     }
+
+
+    /**
+     * Various getters and setters
+     * */
 
     public void setLength(int length) {
         this.length = length;
@@ -124,9 +150,5 @@ public class Square {
 
     public int getId() {
         return id;
-    }
-
-    public int getLength() {
-        return length;
     }
 }

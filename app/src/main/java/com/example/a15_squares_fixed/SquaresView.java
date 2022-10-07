@@ -19,15 +19,23 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * The view class for 15 Squares
+ *
+ * @author Kathryn Weidman
+ * @version 10/6/22
+ *
+ * */
+
 public class SquaresView extends SurfaceView implements CompoundButton.OnCheckedChangeListener,
         View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
 
     private SquaresModel mod;
     private ArrayList<Square> squareList;
-    private Paint bgPaint, imgPaint, yay;
+    private Paint bgPaint, imgPaint;
     private Rect bg;
     private boolean firstDraw = true, colors = false, objection = false, gameWon = false;
-    private Bitmap obj;
+    private final Bitmap obj;
     private TextView boardText;
     private int oldProg, newProg;
     private static final int[][] neighborCoords = {{ -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
@@ -54,13 +62,13 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
         idColor = Color.WHITE;
         winColor = 0xFF000524;
 
-        yay = new Paint();
-        yay.setColor(idColor);
-
         obj = BitmapFactory.decodeResource(getResources(), R.drawable.object);
         oldProg = newProg = 4;
     }
 
+    /**
+     * Create the squareList arraylist to be used for the next game depending on the settings
+     * */
     private void initBoard() {
         int bLength = mod.bLength;
 
@@ -127,7 +135,7 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
     }
 
     /**
-     * Draws a png of the objection bubble from Ace Attorney
+     * Draws a png of the objection bubble from Ace Attorney when called
      */
     public void drawbjection(Canvas c) {
         for (int p = 0; p < 9; p++)
@@ -152,7 +160,6 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
                 winBG = 0xFF000524; //dark blue
             }
             bgPaint.setColor(winBG);
-            c.drawText("You Win!", mod.nullX + mod.length, mod.nullY + mod.length / 2, yay);
         } else {
             bgPaint.setColor(Color.GRAY);
         }
@@ -215,7 +222,7 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
             }
         }
         checkWin();
-        if (gameWon) {
+        if (gameWon || !isSolvable()) {
             gameWon = false;
             shuffleSquares(sList);
         }
@@ -421,6 +428,9 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
         return false; //there was no null neighbor
     }
 
+    /**
+     * Checks the given square to see if it's in the correct place on the board
+     * */
     public boolean checkPlace(Square s) {
         if (s != null) {
             int winRow = (s.getId() - 1) / mod.bLength;
@@ -432,6 +442,9 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
         return false;
     }
 
+    /**
+     * Checks squareList to see if all the squares are in the correct place
+     * */
     public void checkWin() {
         for (Square s : squareList) {
             if (s == null) {
@@ -444,6 +457,35 @@ public class SquaresView extends SurfaceView implements CompoundButton.OnChecked
             }
         }
         gameWon = true;
+    }
+
+    /*
+     * External Citation: isSolvable method
+     *
+     * Problem: Did not understand exactly what I was looking at
+     *
+     * Resolution: Nate had a picture explaining how the solvability of this game worked
+     * */
+    /**
+     * Checks the random board to see if it can be solved
+     * */
+    private boolean isSolvable() {
+        int bLength = mod.bLength;
+        int altSum = 0;
+        for (int i = 0; i < bLength * bLength; i++) {
+            if (squareList.get(i) == null) {
+                continue;
+            }
+            for (int j = 0; j < i; j++) {
+                if (squareList.get(j) == null) {
+                    continue;
+                }
+                if (squareList.get(j).getId() > squareList.get(i).getId()) {
+                    altSum++;
+                }
+            }
+        }
+        return (altSum % 2 == 0);
     }
 
 }

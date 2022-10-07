@@ -12,6 +12,14 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * The main class for 15 Squares
+ *
+ * @author Kathryn Weidman
+ * @version 10/6/22
+ *
+ * */
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -37,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         view.setOnTouchListener(view);
     }
 
+    /**
+     * Exits the app when the goodbye button is clicked
+     * */
     public void goodbye(View button) {
         Log.i("button","Goodbye!");
         finishAffinity();
